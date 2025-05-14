@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ro"> <!-- Default to Romanian, JS will update if needed -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Optimizer Ipotecă Pro - Compară Scenarii</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f4f7f6; color: #333; padding: 10px; }
+        
+        .page-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1500px; /* Increased max-width for three columns */
+            margin: 20px auto;
+        }
+
+        .advice-column {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px; /* Max width for advice columns */
+            padding: 20px;
+            background-color: #fffacd; /* Lighter, more lemon-like yellow for notes */
+            border: 1px solid #fadf87;
+            border-radius: 8px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.07);
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif; /* "Handwriting" font */
+            line-height: 1.7;
+            font-size: 0.9em; /* Slightly smaller font for advice */
+            min-height: 500px; /* Adjust this value as needed to match calculator's initial height */
+            max-height: 70vh; /* Max height as a percentage of viewport height, prevents it from getting too tall */
+            overflow-y: auto; /* Add scroll if content exceeds max-height */
+            display: flex; /* To help with internal alignment if needed */
+            flex-direction: column; /* Stack h3 and p tags naturally */
+        }
+        .advice-column h3 {
+            font-size: 1.15em; /* Adjusted */
+            color: #b8860b; /* Darker yellow/brown for titles */
+            margin-bottom: 12px;
+            border-bottom: 1px dashed #b8860b;
+            padding-bottom: 6px;
+        }
+        .advice-column p {
+            font-size: 1em; /* Relative to parent's 0.9em */
+            margin-bottom: 12px;
+        }
+        .advice-column strong { /* Make strong tags within advice more distinct if needed */
+            font-weight: 600; 
+        }
+
+
+        .calculator-column {
+            flex: 2.5; /* Calculator takes more space */
+            min-width: 450px; 
+        }
+
+        .container { /* For the calculator itself */
+            width: 100%; 
+            padding: 25px; 
+            background-color: #ffffff; 
+            border-radius: 10px; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; }
+        .container h3 { color: #34495e; margin-bottom: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
+        .container h4 { color: #2980b9; margin-top: 20px; margin-bottom: 10px; }
+        .form-section { margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 6px; border: 1px solid #e7e7e7; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #555; }
+        input[type="number"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em; }
+        .form-section > div:not(.input-group) input[type="number"] { margin-bottom: 10px; }
+        input[type="number"]:focus { border-color: #007bff; outline: none; box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+        .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px; }
+        .button-group { display: flex; gap: 10px; margin-top: 20px; }
+        .button-group button { flex: 1; }
+        button { display: block; width: 100%; padding: 12px 15px; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; font-weight: bold; transition: background-color 0.2s ease-in-out; }
+        .btn-primary { background-color: #007bff; }
+        .btn-primary:hover { background-color: #0056b3; }
+        .btn-secondary { background-color: #6c757d; }
+        .btn-secondary:hover { background-color: #545b62; }
+        .btn-clear { background-color: #dc3545; margin-top: 10px;}
+        .btn-clear:hover { background-color: #c82333; }
+        .results-container { display: flex; gap: 20px; margin-top: 25px; flex-wrap: wrap; }
+        .result-column { flex: 1; min-width: 300px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background-color: #fdfdfd; }
+        .result-column h4 { margin-top: 0; }
+        .highlight-savings { color: #27ae60; font-weight: bold; }
+        .highlight-original { color: #7f8c8d; }
+        #chartContainer { margin-top: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 6px; background-color: #fdfdfd; display: none; height: 400px; }
+        #loanBalanceChart { max-height: 100%; }
+        #amortizationScheduleSection { margin-top: 30px; display: none; }
+        .table-container { max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px; }
+        #amortizationTable { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        #amortizationTable th, #amortizationTable td { padding: 10px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+        #amortizationTable th { background-color: #e9ecef; color: #495057; font-weight: 600; position: sticky; top: 0; z-index: 1; }
+        #amortizationTable tbody tr:nth-child(even) { background-color: #f9f9f9; }
+        #amortizationTable tbody tr:hover { background-color: #f1f1f1; }
+        .lang-switcher { text-align: right; margin-bottom: 15px; padding: 5px 0; max-width: 1500px; margin-left:auto; margin-right:auto;} /* Centered language switcher */
+        .lang-switcher button { display: inline-block; width: auto; padding: 6px 12px; font-size: 0.9em; margin-left: 8px; }
+        .page-footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px; /* Space above the footer */
+            font-size: 0.9em;
+            color: #777;
+            border-top: 1px solid #eee; /* Optional separator line */
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switcher">
+        <button onclick="setLanguage('en')" class="btn-secondary">English</button>
+        <button onclick="setLanguage('ro')" class="btn-secondary">Română</button>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="advice-column" id="adviceLeft">
+            <h3 id="adviceTitle1">Sfat de la Specialist / Expert Tip #1</h3>
+            <p id="adviceText1_p1">Oamenii se îndatorează la gradul maxim permis de bancă (40%), când specialiștii recomandă maxim 25-30%. Nu uitați de expertul tehnic imobiliar înainte de a cumpăra, pentru a evita surprize costisitoare!</p>
+            <p id="adviceText1_p2"><strong>Exemplu Plată Anticipată:</strong></p>
+            <p id="adviceText1_p3">Credit: 350.000 Lei (€70.000), 30 ani, dobândă 8%. Rată lunară: ~2567 Lei.</p>
+            <p id="adviceText1_p4">În prima lună, din rata de ~2567 Lei, poate doar ~220 Lei merg la principal, restul de ~2347 Lei fiind dobândă. Acest raport se inversează treptat.</p>
+            <p id="adviceText1_p5">Strategia: Plătești rata normală. A doua zi, mai depui 200 Lei și ceri băncii 'plată parțial anticipată CU REDUCEREA PERIOADEI'.</p>
+            <p id="adviceText1_p6">Impactul: Acei 200 Lei reduc direct principalul. Nu vei mai plăti dobânda de 8% pe an pentru acei 200 Lei pentru TOȚI anii rămași! Economiile pe termen lung sunt uriașe. Folosește calculatorul pentru a vedea exact!</p>
+        </div>
+
+        <div class="calculator-column">
+            <div class="container"> <!-- Calculator Container -->
+                <h2 id="mainHeading">Optimizer Ipotecă Pro - Compară Scenarii</h2>
+                
+                <div class="form-section">
+                    <div><label for="principal" id="loanAmountLabel">Suma împrumutată:</label><input type="number" id="principal" placeholder="e.g., 250000"></div>
+                    <div class="input-group">
+                        <div><label for="annualInterestRate" id="annualInterestRateLabel">Rata dobânzii anuale (%):</label><input type="number" id="annualInterestRate" step="0.01" placeholder="e.g., 5"></div>
+                        <div><label for="loanTermYears" id="loanTermYearsLabel">Perioada creditului în ani:</label><input type="number" id="loanTermYears" placeholder="e.g., 30"></div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h4 id="extraPaymentOptionsTitle">Opțiuni Plăți Suplimentare (Scenariul Curent):</h4>
+                    <div><label for="extraMonthlyPayment" id="extraMonthlyPaymentLabel">Plată suplimentară lunară (opțional):</label><input type="number" id="extraMonthlyPayment" placeholder="e.g., 100" value="0"></div>
+                    <div class="input-group">
+                        <div><label for="lumpSumPayment" id="lumpSumPaymentLabel">Plată unică (opțional):</label><input type="number" id="lumpSumPayment" placeholder="e.g., 5000" value="0"></div>
+                        <div><label for="lumpSumMonth" id="lumpSumMonthLabel">Luna plății unice:</label><input type="number" id="lumpSumMonth" placeholder="e.g., 12" value="0"></div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button onclick="calculateAndDisplayCurrent()" class="btn-primary" id="calculateButton">Calculează Scenariul Curent</button>
+                    <button onclick="pinCurrentAsScenarioA()" class="btn-secondary" id="pinScenarioAButton">Salvează ca Scenariul A & Compară</button>
+                </div>
+                <button onclick="clearComparison()" class="btn-clear" id="clearComparisonButton" style="display:none;">Șterge Comparația</button>
+                <div class="results-container">
+                    <div class="result-column" id="scenarioAResults" style="display:none;"></div>
+                    <div class="result-column" id="currentScenarioResults"><div id="resultSummaryCurrent"></div><div id="earlyRepaymentResultCurrent"></div></div>
+                </div>
+                <div id="chartContainer"><h4 id="loanBalanceComparisonTitle">Comparație Sold Credit</h4><canvas id="loanBalanceChart"></canvas></div>
+                <div id="amortizationScheduleSection" style="display: none;">
+                    <h3 id="amortizationScheduleTitle">Grafic de Rambursare (Scenariul Curent)</h3>
+                    <div class="table-container">
+                        <table id="amortizationTable">
+                            <thead><tr><th id="colMonth">#</th><th id="colTotalPmt">Plată Totală</th><th id="colInterest">Dobândă</th><th id="colPrincipalStd">Principal (Std)</th><th id="colExtraMonthly">Extra (Lunar)</th><th id="colExtraLump">Extra (Unic)</th><th id="colBalance">Sold Rămas</th></tr></thead>
+                            <tbody id="amortizationTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- END Calculator Container -->
+        </div>
+
+        <div class="advice-column" id="adviceRight">
+            <h3 id="adviceTitle2">Experiența unui Utilizator / User Experience</h3>
+            <p id="adviceText2_p1">Am luat un credit în 2020 de 50.000€, rată fixă 7 ani de 5%.</p>
+            <p id="adviceText2_p2">Am plătit din el în 3 ani cam 35.000€. Anul acesta am prins programul Family Start și l-am "mutat" la CEC, crescând puțin rata.</p>
+            <p id="adviceText2_p3">Practic, în momentul acesta, dobânda lunară plătită de mine este 150 Lei, iar principalul se învârte la 2000 Lei.</p>
+            <p id="adviceText2_p4">Am închis ipotecarul, deci sunt proprietar după 4 ani!</p>
+            <p id="adviceText2_p5">Plata anticipată mi-a oferit foarte mulți ani în minus. Acum am rămas cu aproximativ 11.000€, dar la cât de mică e dobânda, nu mă mai chinui să plătesc anticipat - păstrez rata așa cum este ea și folosesc "dobânda" câștigată (economiile) să strâng de concedii.</p>
+        </div>
+    </div> <!-- END Page Wrapper -->
+        <footer class="page-footer" id="pageFooter">
+            <p id="poweredByText">Powered by Insomniscape Technologies</p>
+            <!-- You can add a copyright or year too if you like -->
+            <!-- <p>© 2023 Your Name/Insomniscape Technologies</p> -->
+        </footer>
+    <script src="calculator.js"></script>
+</body>
+</html>
