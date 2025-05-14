@@ -1,4 +1,4 @@
-alert("Calculator.js IS ATTEMPTING TO LOAD AND PARSE!"); // For debugging loading
+
 
 // --- LANGUAGE STRINGS (SHOULD BE AT THE VERY TOP) ---
 const languageStrings = {
