@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator Tests</title>
+    <script src="calculator.js"></script>
+    <script src="calculator_tests.js"></script>
+</head>
+<body>
+    <h1>Mortgage Calculator Tests</h1>
+    <div id="testResults" style="font-family: monospace; white-space: pre;"></div>
+
+    <script>
+        function runTests() {
+            const resultsDiv = document.getElementById('testResults');
+            // (Test execution logic will be defined in calculator_tests.js)
+            // For now, this will be expanded by calculator_tests.js
+            if (typeof window.runAllTests === 'function') {
+                window.runAllTests(resultsDiv);
+            } else {
+                resultsDiv.innerHTML = "ERROR: runAllTests function not found. Check calculator_tests.js.";
+            }
+        }
+        window.onload = runTests;
+    </script>
+</body>
+</html>
