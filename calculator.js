@@ -1,129 +1,78 @@
-// --- LANGUAGE STRINGS (SHOULD BE AT THE VERY TOP) ---
-const languageStrings = {
-    en: {
-        pageTitle: "Mortgage Optimizer Pro - Compare Scenarios", mainHeading: "Mortgage Optimizer Pro - Compare Scenarios",
-        extraPaymentOptionsTitle: "Extra Payment Options (Current Scenario):", loanBalanceComparisonTitle: "Loan Balance Comparison",
-        amortizationScheduleTitle: "Amortization Schedule (Current Scenario)", loanAmountLabel: "Loan Amount:",
-        annualInterestRateLabel: "Annual Interest Rate (%):", loanTermYearsLabel: "Loan Term (Years):",
-        extraMonthlyPaymentLabel: "Extra Monthly Payment (optional):", lumpSumPaymentLabel: "Lump Sum Payment (optional):",
-        lumpSumMonthLabel: "Month of Lump Sum Payment:", calculateButton: "Calculate Current Scenario",
-        pinScenarioAButton: "Pin as Scenario A & Compare", clearComparisonButton: "Clear Comparison",
-        scenarioAStandardTitle: "Scenario A (Standard)", scenarioAAcceleratedTitle: "Scenario A (Accelerated)",
-        currentStandardRefTitle: "Current Standard Scenario (Reference)", currentAcceleratedTitle: "Current Accelerated Scenario",
-        scenarioBStandardTitle: "Scenario B (Standard)", scenarioBAcceleratedTitle: "Scenario B (Accelerated)",
-        enterScenarioBPrompt: 'Enter data for Scenario B and press "Calculate Current Scenario"',
-        monthlyPaymentText: "Monthly Payment:", totalInterestPaidText: "Total Interest Paid:",
-        totalCostOfLoanText: "Total Cost of Loan:", payoffPeriodText: "Payoff Period:",
-        newPayoffPeriodText: "New Payoff Period:", yearsAndMonthsSoonerText: "sooner",
-        totalMonthsText: "months total", interestSavedText: "Interest Saved:",
-        noTimeSavedText: "No time saved", checkComparisonText: "Check comparison",
-        chartStandardBalanceLabel: "Standard Balance (Reference)", chartScenarioALabel: "Scenario A",
-        chartScenarioBLabel: "Scenario B", chartMonthsLabel: "Months", chartLoanBalanceLabel: "Loan Balance",
-        colMonth: "#", colTotalPmt: "Total Pmt", colInterest: "Interest", colPrincipalStd: "Principal (Std)",
-        colExtraMonthly: "Extra (Monthly)", colExtraLump: "Extra (Lump)", colBalance: "Balance",
-        validationErrorAlert: "Validation Errors:\n", lumpSumMonthErrorAlert1: "Month of lump sum payment (",
-        lumpSumMonthErrorAlert2: ") cannot exceed the total loan term (", lumpSumMonthErrorAlert3: " months).",
-        calculateFirstAlert: "Please calculate a scenario first.",
-        pinnedAlert1: "Current scenario pinned as Scenario A. Modify inputs for Scenario B and press 'Calculate Current Scenario'.",
-        adviceTitle1: "Expert Tip #1: Smart Borrowing & Early Repayment Strategy",
-        adviceText1_p1: "People often max out their borrowing (e.g., 40% debt-to-income), but financial specialists recommend aiming for a maximum of 25-30%. This provides greater financial stability. Also, always consult a real estate technical expert before purchasing a property to avoid costly, hidden surprises – don't just see it and immediately pay!",
-        adviceText1_p2: "<strong>Early Repayment Example:</strong>",
-        adviceText1_p3: "Consider a loan of €70,000 (approx. 350,000 Lei) for a 2-room apartment in a decent Bucharest area, over 30 years, with an 8% variable interest rate. This might mean a monthly payment of around 2567 Lei.",
-        adviceText1_p4: "In the first month, only about 220 Lei could go towards your actual loan principal, while the remaining 2347 Lei is interest paid to the bank! This ratio of principal to interest inverts slowly over the years; in the first half of the loan, you pay more interest each month than principal.",
-        adviceText1_p5: "The Strategy: Your payment is due on the 15th. You pay your 2567 Lei. The next day, the 16th, you go to the bank with an additional 200 Lei. You submit a request for 'partial early repayment' (<em>plată parțial anticipată</em>) and choose the option to 'REDUCE THE LOAN PERIOD' (<em>reducerea perioadei</em>), not reduce the monthly payment amount.",
-        adviceText1_p6: "The Impact: By reducing the period with that extra 200 Lei, you've effectively reduced the principal on which future interest is calculated. You stop paying 8% annual interest on that 200 Lei for ALL the remaining years of the loan. This is because the interest for the next day (e.g., 2300 Lei interest / 30 days = ~76 Lei daily interest) now applies to a slightly smaller principal. Every day costs interest, so paying down principal faster saves you from those future daily interest charges on the amount prepaid. Use the calculator above to see your exact potential savings!",
-        adviceTitle2: "A User's Real-Life Success with Early & Strategic Payments",
-        adviceText2_p1: "I took a €50,000 loan in 2020, with a 5% fixed rate for 7 years. Over 3 years, I paid back about €35,000.",
-        adviceText2_p2: "This year, I took advantage of the 'Family Start' program, transferred my loan to CEC Bank, and slightly increased my monthly payment.",
-        adviceText2_p3: "Currently, the interest portion of my monthly payment is only 150 Lei, while about 2000 Lei goes towards the principal.",
-        adviceText2_p4: "I paid off the mortgage completely and became a full homeowner after just 4 years! Early repayment saved me many, many years on the loan.",
-        adviceText2_p5: "Now, I only have about €11,000 left. Because the current interest on this remaining amount is so low, I'm no longer aggressively making extra payments. I'm keeping the current payment as is and using the money I'm 'saving' on potential high interest to save for vacations.",
-        poweredByText: "Powered by Insomniscape Technologies"
-    },
-    ro: {
-        pageTitle: "Optimizer Ipotecă Pro - Compară Scenarii", mainHeading: "Optimizer Ipotecă Pro - Compară Scenarii",
-        extraPaymentOptionsTitle: "Opțiuni Plăți Suplimentare (Scenariul Curent):", loanBalanceComparisonTitle: "Comparație Sold Credit",
-        amortizationScheduleTitle: "Grafic de Rambursare (Scenariul Curent)", loanAmountLabel: "Suma împrumutată:",
-        annualInterestRateLabel: "Rata dobânzii anuale (%):", loanTermYearsLabel: "Perioada creditului în ani:",
-        extraMonthlyPaymentLabel: "Plată suplimentară lunară (opțional):", lumpSumPaymentLabel: "Plată unică (opțional):",
-        lumpSumMonthLabel: "Luna plății unice:", calculateButton: "Calculează Scenariul Curent",
-        pinScenarioAButton: "Salvează ca Scenariul A & Compară", clearComparisonButton: "Șterge Comparația",
-        scenarioAStandardTitle: "Scenariul A (Standard)", scenarioAAcceleratedTitle: "Scenariul A (Accelerat)",
-        currentStandardRefTitle: "Scenariul Standard (Referință Curentă)", currentAcceleratedTitle: "Scenariul Curent (Accelerat)",
-        scenarioBStandardTitle: "Scenariul B (Standard)", scenarioBAcceleratedTitle: "Scenariul B (Accelerat)",
-        enterScenarioBPrompt: 'Introduceți datele pentru Scenariul B și apăsați "Calculează Scenariul Curent"',
-        monthlyPaymentText: "Rata lunară:", totalInterestPaidText: "Dobânda totală plătită:",
-        totalCostOfLoanText: "Costul total al creditului:", payoffPeriodText: "Perioada de rambursare:",
-        newPayoffPeriodText: "Noua perioadă de rambursare:", yearsAndMonthsSoonerText: "mai devreme",
-        totalMonthsText: "luni total", interestSavedText: "Dobândă Economisită:",
-        noTimeSavedText: "Nicio economie de timp", checkComparisonText: "Verificați comparația",
-        chartStandardBalanceLabel: "Sold Standard (Referință)", chartScenarioALabel: "Scenariul A",
-        chartScenarioBLabel: "Scenariul B", chartMonthsLabel: "Luni", chartLoanBalanceLabel: "Sold Credit",
-        colMonth: "#", colTotalPmt: "Plată Totală", colInterest: "Dobândă", colPrincipalStd: "Principal (Std)",
-        colExtraMonthly: "Extra (Lunar)", colExtraLump: "Extra (Unic)", colBalance: "Sold Rămas",
-        validationErrorAlert: "Erori de validare:\n", lumpSumMonthErrorAlert1: "Luna plății unice (",
-        lumpSumMonthErrorAlert2: ") nu poate depăși durata totală a creditului (", lumpSumMonthErrorAlert3: " luni).",
-        calculateFirstAlert: "Vă rugăm calculați mai întâi un scenariu.",
-        pinnedAlert1: "Scenariul curent a fost salvat ca Scenariul A. Modificați intrările pentru Scenariul B și apăsați 'Calculează Scenariul Curent'.",
-        adviceTitle1: "Sfat de Specialist: Îndatorare Inteligentă & Strategia Plății Anticipate",
-        adviceText1_p1: "Oamenii se îndatorează la gradul maxim permis de bancă (40%), când specialiștii recomandă un prag de maxim 25-30%. De asemenea, apelați întotdeauna la un expert tehnic imobiliar înainte de a cumpăra, pentru a evita surprize costisitoare – nu doar vedeți casa și plătiți imediat!",
-        adviceText1_p2: "<strong>Exemplu Plată Anticipată Parțială:</strong>",
-        adviceText1_p3: "Credit de 70.000 de euro (echivalentul a 350.000 de lei) pentru un apartament de 2 camere, confort 2, într-o zonă decentă a Bucureștiului. Credit pe 30 de ani cu dobândă de 8% variabilă. Aceasta înseamnă o rată de aproximativ 2567 Lei pe lună.",
-        adviceText1_p4: "Principalul – banul pe care îl dai înapoi băncii în fiecare lună din creditul luat – este în prima lună poate doar 220 Lei. Dobânda băncii este diferența, adică 2347 Lei în prima lună. Raportul se inversează ușor-ușor, cu câte un leu-doi; în prima jumătate a creditului plătești mai multă dobândă în fiecare lună decât principal.",
-        adviceText1_p5: "Strategia: Data scadentă este pe 15 ale lunii. Plătești rata de 2567 Lei. A doua zi, pe 16, te mai duci la bancă cu încă 200 de Lei. Soliciți o cerere de 'plată parțial anticipată' (adică în avans) și plătești suma de 200 Lei. Vei avea opțiunea să alegi între 'reducerea perioadei' și 'reducerea ratei'. Tu vrei să REDUCI PERIOADA.",
-        adviceText1_p6: "Impactul: Reducând perioada cu acei 200 Lei, ai scăzut direct principalul. Nu vei mai plăti dobânda de 8% pe an pentru acei 200 Lei pentru TOȚI anii rămași din credit! Dobânda zilnică (ex: 2300 Lei dobândă lunară / 30 zile = ~76 Lei/zi) se aplică acum unui principal mai mic. Fiecare zi costă dobândă, deci reducerea principalului te scutește de acele costuri viitoare. Folosește calculatorul pentru a vedea exact cât economisești!",
-        adviceTitle2: "Experiența Reală a unui Utilizator cu Plăți Anticipate și Strategice",
-        adviceText2_p1: "Am luat un credit în 2020 de 50.000€, rată fixă 7 ani de 5%. Am plătit din el în 3 ani cam 35.000€.",
-        adviceText2_p2: "Anul acesta am prins programul Family Start. L-am \"mutat\" la CEC. Și am mai crescut puțin rata.",
-        adviceText2_p3: "Practic, în momentul acesta, dobânda lunară plătită de mine este 150 Lei. Iar principalul se învârte la 2000 Lei.",
-        adviceText2_p4: "Am închis ipotecarul, deci sunt proprietar după 4 ani!",
-        adviceText2_p5: "Plata anticipată mi-a oferit foarte mulți ani în minus. Acum am rămas cu aproximativ 11.000€, dar la cât de mică e dobânda, nu mă mai chinui să plătesc anticipat - păstrez rata așa cum este ea și folosesc \"dobânda\" câștigată (economiile) să strâng de concedii.",
-        poweredByText: "Realizat de Insomniscape Technologies"
-    }
-};
-
+let languageStrings = {};
 let currentLanguage = localStorage.getItem('preferredLanguage') || 'ro';
 let loanChart = null;
 let scenarioAData = null;
 let currentScenarioData = null;
 
 // --- LANGUAGE FUNCTIONS ---
+async function loadLanguageStrings() {
+    try {
+        const response = await fetch('./locales.json');
+        if (!response.ok) throw new Error('Failed to fetch locales.json: ' + response.statusText);
+        const data = await response.json();
+        languageStrings = data;
+        console.log("Language strings loaded successfully.");
+        setLanguage(currentLanguage); // Apply translations and update UI after strings are loaded
+    } catch (error) {
+        console.error("Error loading language strings:", error);
+        languageStrings = { en: { pageTitle: "Mortgage Optimizer Pro", calculateButton: "Calculate" }, ro: { pageTitle: "Optimizer Ipotecă Pro", calculateButton: "Calculează" } };
+        setLanguage(currentLanguage); // Attempt to apply fallback translations
+    }
+}
+
 function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('preferredLanguage', lang);
     applyTranslations();
 
     const S = languageStrings[currentLanguage];
+    const S = languageStrings[currentLanguage];
+    if (!S) { console.error("Language strings not found for setLanguage:", currentLanguage); return; }
+
     if (scenarioAData) {
-        const isAEffectivelyAccelerated = scenarioAData.acceleratedResults && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01);
-        const titleAKey = isAEffectivelyAccelerated ? 'scenarioAAcceleratedTitle' : 'scenarioAStandardTitle';
+        const inputsA = scenarioAData.inputs;
+        const isAExtraEffective = inputsA.extraMonthlyPayment > 0 || (inputsA.lumpSumPayment > 0 && inputsA.lumpSumMonth > 0 && inputsA.lumpSumMonth <= scenarioAData.standardResults.numberOfPayments);
+        const isAEffectivelyAccelerated = scenarioAData.acceleratedResults && isAExtraEffective && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01);
+        
+        let titleAKey;
+        if (isAEffectivelyAccelerated) {
+            titleAKey = 'scenarioAAcceleratedTitle';
+        } else if (isAExtraEffective) {
+            titleAKey = 'scenarioAStandardWithExtrasTitle';
+        } else {
+            titleAKey = 'scenarioAStandardTitle';
+        }
         const resultsA = isAEffectivelyAccelerated ? scenarioAData.acceleratedResults : scenarioAData.standardResults;
         document.getElementById('scenarioAResults').innerHTML = displaySummaryContent(S[titleAKey], resultsA, isAEffectivelyAccelerated, scenarioAData.standardResults.totalInterest);
     }
 
     if (currentScenarioData && currentScenarioData.standardResults) {
         const currentResultsContainer = document.getElementById('currentScenarioResults');
-        let currentTitleKey, currentResultsToDisplay, currentIsEffectivelyAccelerated;
-        
         const standardResultsForCurrentInputs = currentScenarioData.standardResults;
         const inputs = currentScenarioData.inputs;
         const isExtraMonthlyEffective = inputs.extraMonthlyPayment > 0;
         const isLumpSumEffective = inputs.lumpSumPayment > 0 && inputs.lumpSumMonth > 0 && inputs.lumpSumMonth <= standardResultsForCurrentInputs.numberOfPayments;
+        const hasAnyExtraPayment = isExtraMonthlyEffective || isLumpSumEffective;
 
-        if (currentScenarioData.acceleratedResults && (isExtraMonthlyEffective || isLumpSumEffective) &&
-            (currentScenarioData.acceleratedResults.numberOfPayments < standardResultsForCurrentInputs.numberOfPayments || currentScenarioData.acceleratedResults.totalInterest < standardResultsForCurrentInputs.totalInterest - 0.01)) {
+        let currentTitleKey, currentResultsToDisplay, currentIsEffectivelyAccelerated;
+
+        const isEffectivelyAccelerated = currentScenarioData.acceleratedResults && hasAnyExtraPayment &&
+            (currentScenarioData.acceleratedResults.numberOfPayments < standardResultsForCurrentInputs.numberOfPayments || currentScenarioData.acceleratedResults.totalInterest < standardResultsForCurrentInputs.totalInterest - 0.01);
+
+        if (isEffectivelyAccelerated) {
             currentTitleKey = scenarioAData ? 'scenarioBAcceleratedTitle' : 'currentAcceleratedTitle';
             currentResultsToDisplay = currentScenarioData.acceleratedResults;
             currentIsEffectivelyAccelerated = true;
-        } else {
-            currentTitleKey = scenarioAData ? 'scenarioBStandardTitle' : 'currentStandardRefTitle';
-            if (inputs.extraMonthlyPayment > 0 || (inputs.lumpSumPayment > 0 && inputs.lumpSumMonth > 0)) {
-                currentTitleKey += "*";
+        } else { // Standard or Standard with (ineffective or no) Extras
+            if (scenarioAData) { // This is Scenario B
+                currentTitleKey = hasAnyExtraPayment ? 'scenarioBStandardWithExtrasTitle' : 'scenarioBStandardTitle';
+            } else { // This is the main Current Scenario
+                currentTitleKey = hasAnyExtraPayment ? 'currentStandardRefWithExtrasTitle' : 'currentStandardRefTitle';
             }
             currentResultsToDisplay = standardResultsForCurrentInputs;
             currentIsEffectivelyAccelerated = false;
         }
-        currentResultsContainer.innerHTML = displaySummaryContent(S[currentTitleKey] || currentTitleKey.replace('*', ` (${S.checkComparisonText.toLowerCase()})`), currentResultsToDisplay, currentIsEffectivelyAccelerated, standardResultsForCurrentInputs.totalInterest);
+        currentResultsContainer.innerHTML = displaySummaryContent(S[currentTitleKey], currentResultsToDisplay, currentIsEffectivelyAccelerated, standardResultsForCurrentInputs.totalInterest);
     } else if (scenarioAData) {
          document.getElementById('currentScenarioResults').innerHTML = `<h4>${S.enterScenarioBPrompt}</h4><div id="resultSummaryCurrent"></div><div id="earlyRepaymentResultCurrent"></div>`;
     }
@@ -183,7 +132,12 @@ function calculateAndDisplayCurrent() {
     if (!inputs) { clearAllDisplays(true); return; }
 
     const standardResultsForCurrentInputs = calculateStandardLoan(inputs.principal, inputs.annualInterestRate, inputs.loanTermYears);
-    if (!standardResultsForCurrentInputs) { clearAllDisplays(true); return; }
+    if (!standardResultsForCurrentInputs) {
+        clearAllDisplays(true);
+        const errorMsg = currentLanguage === 'ro' ? "A apărut o eroare de calcul. Verificați valorile introduse și încercați din nou." : "A calculation error occurred. Please verify your input values and try again.";
+        alert(S.validationErrorAlert + errorMsg);
+        return;
+    }
 
     currentScenarioData = {
         inputs: inputs, standardResults: standardResultsForCurrentInputs,
@@ -211,26 +165,29 @@ function calculateAndDisplayCurrent() {
         
         if (accelerated && (accelerated.numberOfPayments < standardResultsForCurrentInputs.numberOfPayments || accelerated.totalInterest < standardResultsForCurrentInputs.totalInterest - 0.01)) {
             currentScenarioData.acceleratedResults = accelerated;
+            currentScenarioData.acceleratedResults = accelerated;
             currentScenarioData.acceleratedBalanceHistory = accelerated.balanceHistory;
             currentTitleKey = scenarioAData ? 'scenarioBAcceleratedTitle' : 'currentAcceleratedTitle';
+            // If accelerated, the "WithExtras" variant is implied, so no separate key needed unless explicitly desired for "Accelerated With Extras"
             currentResultsToDisplay = accelerated;
             currentIsEffectivelyAccelerated = true;
             currentAmortizationSchedule = accelerated.schedule;
-        } else {
-            currentTitleKey = scenarioAData ? 'scenarioBStandardTitle' : 'currentStandardRefTitle';
-            if (inputs.extraMonthlyPayment > 0 || (inputs.lumpSumPayment > 0 && inputs.lumpSumMonth > 0)) { 
-                 currentTitleKey += "*"; 
+        } else { // Standard loan, possibly with extra payments that weren't "accelerating" enough
+            if (scenarioAData) { // This is Scenario B
+                currentTitleKey = (isExtraMonthlyEffective || isLumpSumEffective) ? 'scenarioBStandardWithExtrasTitle' : 'scenarioBStandardTitle';
+            } else { // This is the main Current Scenario
+                currentTitleKey = (isExtraMonthlyEffective || isLumpSumEffective) ? 'currentStandardRefWithExtrasTitle' : 'currentStandardRefTitle';
             }
             currentResultsToDisplay = standardResultsForCurrentInputs;
             currentIsEffectivelyAccelerated = false;
         }
-    } else {
+    } else { // No extra payments at all
         currentTitleKey = scenarioAData ? 'scenarioBStandardTitle' : 'currentStandardRefTitle';
         currentResultsToDisplay = standardResultsForCurrentInputs;
         currentIsEffectivelyAccelerated = false;
     }
     
-    let displayTitle = S[currentTitleKey] || currentTitleKey.replace('*', ` (${S.checkComparisonText.toLowerCase()})`);
+    let displayTitle = S[currentTitleKey] || currentTitleKey; // The key should now directly exist
     currentScenarioContainer.innerHTML = displaySummaryContent(displayTitle, currentResultsToDisplay, currentIsEffectivelyAccelerated, standardResultsForCurrentInputs.totalInterest);
     generateAmortizationTable(currentAmortizationSchedule);
     updateChart();
@@ -278,10 +235,16 @@ function calculateStandardLoan(principal, annualInterestRate, loanTermYears) {
         const powerTerm = Math.pow((1 + monthlyInterestRate), numberOfPayments);
         const numerator = monthlyInterestRate * powerTerm;
         const denominator = powerTerm - 1;
-        if (denominator === 0 || isNaN(denominator) || denominator === Infinity) return null; 
+        if (denominator === 0 || isNaN(denominator) || !isFinite(denominator)) {
+            console.error("Error: Invalid denominator in calculateStandardLoan. Denominator:", denominator);
+            return null;
+        }
         consistentMonthlyPayment = principal * (numerator / denominator);
     }
-    if (isNaN(consistentMonthlyPayment) || !isFinite(consistentMonthlyPayment)) return null;
+    if (isNaN(consistentMonthlyPayment) || !isFinite(consistentMonthlyPayment)) {
+        console.error("Error: consistentMonthlyPayment is NaN or not finite. Value:", consistentMonthlyPayment);
+        return null;
+    }
     const schedule = [];
     const balanceHistory = [principal];
     let currentBalance = principal;
@@ -315,9 +278,17 @@ function calculateAcceleratedLoan(principal, annualInterestRate, standardMonthly
     let totalInterestPaidAccumulated = 0;
     let months = 0;
     let lumpSumAppliedThisCalc = false;
-    while (currentBalance > 0.005 && months < originalNumberOfPayments * 2.5) {
+    while (currentBalance > 0.005 && months < originalNumberOfPayments * 2.5) { // Initial check remains for typical termination
+        if (months > originalNumberOfPayments * 3 && originalNumberOfPayments > 0) {
+            console.error("Error: Accelerated calculation exceeded maximum iterations. Inputs:", {principal, annualInterestRate, standardMonthlyPayment, originalNumberOfPayments, extraMonthly, lumpSum, lumpMonth});
+            return null;
+        }
         months++;
         const interestThisMonth = currentBalance * monthlyInterestRate;
+        if (isNaN(interestThisMonth) || !isFinite(interestThisMonth)) {
+            console.error("Error: interestThisMonth became NaN/Infinity in accelerated calc.", {currentBalance, monthlyInterestRate});
+            return null;
+        }
         totalInterestPaidAccumulated += interestThisMonth;
         let principalFromStandardPart = standardMonthlyPayment - interestThisMonth;
         if (principalFromStandardPart < 0) principalFromStandardPart = 0;
@@ -355,8 +326,12 @@ function calculateAcceleratedLoan(principal, annualInterestRate, standardMonthly
 
 function displaySummaryContent(title, results, isActuallyAccelerated, baseStandardTotalInterestForRef = 0) {
     const S = languageStrings[currentLanguage];
-    let html = `<h4>${title}</h4>`;
-    if (!results || !results.numberOfPayments) { html += "<p>N/A</p>"; return html; }
+    if (!results || results.error || !results.numberOfPayments) {
+        let errorDisplayMessage = S.calculateFirstAlert || "Error in calculation or no data.";
+        if (results && results.message) errorDisplayMessage = results.message;
+        return `<h4>${title}</h4><p>${errorDisplayMessage}</p>`;
+    }
+    let html = `<h4>${title}</h4>`; // Title is now passed directly as translated string
 
     if (isActuallyAccelerated) {
         const payoffYears = Math.floor(results.numberOfPayments / 12);
@@ -384,9 +359,9 @@ function displaySummaryContent(title, results, isActuallyAccelerated, baseStanda
         } else if (timeSavedMonths === 0 && results.numberOfPayments > 0 && results.numberOfPayments === refNumberOfPayments) {
              html += `(${S.noTimeSavedText}, aceeași perioadă)<br>`;
         } else if (results.numberOfPayments > 0 && timeSavedMonths < 0) {
-             html += `(${Math.abs(Math.floor(timeSavedMonths / 12))} ani și ${Math.abs(timeSavedMonths % 12)} luni mai mult - ${S.checkComparisonText})<br>`;
-        } else if (results.numberOfPayments > 0 && refNumberOfPayments > 0 && timeSavedMonths !== 0) {
-             html += `(${S.checkComparisonText})<br>`;
+             html += `(${Math.abs(Math.floor(timeSavedMonths / 12))} ani și ${Math.abs(timeSavedMonths % 12)} luni ${S.payoffLongerWarningText || S.checkComparisonText})<br>`;
+        } else if (results.numberOfPayments > 0 && refNumberOfPayments > 0 && timeSavedMonths !== 0) { 
+             html += `(${S.checkComparisonText})<br>`; // Fallback for other non-zero timeSavedMonths differences
         }
         html += `${S.totalInterestPaidText} <strong class="highlight-savings">${results.totalInterest.toFixed(2)}</strong><br>`;
         html += `${S.totalCostOfLoanText} <strong class="highlight-savings">${results.totalPaid.toFixed(2)}</strong><br>`;
@@ -414,8 +389,18 @@ function pinCurrentAsScenarioA() {
     scenarioAContainer.innerHTML = '';
     scenarioAContainer.style.display = 'block';
 
-    const isAEffectivelyAccelerated = scenarioAData.acceleratedResults && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01);
-    const titleAKey = isAEffectivelyAccelerated ? 'scenarioAAcceleratedTitle' : 'scenarioAStandardTitle';
+    const inputsA = scenarioAData.inputs;
+    const isAExtraEffective = inputsA.extraMonthlyPayment > 0 || (inputsA.lumpSumPayment > 0 && inputsA.lumpSumMonth > 0 && inputsA.lumpSumMonth <= scenarioAData.standardResults.numberOfPayments);
+    const isAEffectivelyAccelerated = scenarioAData.acceleratedResults && isAExtraEffective && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01);
+    
+    let titleAKey;
+    if (isAEffectivelyAccelerated) {
+        titleAKey = 'scenarioAAcceleratedTitle';
+    } else if (isAExtraEffective) { // Standard but with extras that weren't "accelerating"
+        titleAKey = 'scenarioAStandardWithExtrasTitle';
+    } else { // Plain standard
+        titleAKey = 'scenarioAStandardTitle';
+    }
     const resultsA = isAEffectivelyAccelerated ? scenarioAData.acceleratedResults : scenarioAData.standardResults;
     
     scenarioAContainer.innerHTML = displaySummaryContent(S[titleAKey], resultsA, isAEffectivelyAccelerated, scenarioAData.standardResults.totalInterest);
@@ -440,21 +425,25 @@ function clearComparison() {
         let currentTitleKey, currentResultsToDisplay, currentIsEffectivelyAccelerated;
         const standardResultsForCurrentInputs = currentScenarioData.standardResults;
         const inputs = currentScenarioData.inputs;
+        const standardResultsForCurrentInputs = currentScenarioData.standardResults;
+        const inputs = currentScenarioData.inputs;
         const isExtraMonthlyEffective = inputs.extraMonthlyPayment > 0;
         const isLumpSumEffective = inputs.lumpSumPayment > 0 && inputs.lumpSumMonth > 0 && inputs.lumpSumMonth <= standardResultsForCurrentInputs.numberOfPayments;
+        const hasAnyExtraPayment = isExtraMonthlyEffective || isLumpSumEffective;
 
-        if (currentScenarioData.acceleratedResults && (isExtraMonthlyEffective || isLumpSumEffective) &&
-            (currentScenarioData.acceleratedResults.numberOfPayments < standardResultsForCurrentInputs.numberOfPayments || currentScenarioData.acceleratedResults.totalInterest < standardResultsForCurrentInputs.totalInterest - 0.01) ) {
+        const isEffectivelyAccelerated = currentScenarioData.acceleratedResults && hasAnyExtraPayment &&
+            (currentScenarioData.acceleratedResults.numberOfPayments < standardResultsForCurrentInputs.numberOfPayments || currentScenarioData.acceleratedResults.totalInterest < standardResultsForCurrentInputs.totalInterest - 0.01);
+
+        if (isEffectivelyAccelerated) {
             currentTitleKey = 'currentAcceleratedTitle';
             currentResultsToDisplay = currentScenarioData.acceleratedResults;
             currentIsEffectivelyAccelerated = true;
-        } else {
-            currentTitleKey = 'currentStandardRefTitle';
-            if (isExtraMonthlyEffective || (inputs.lumpSumPayment > 0 && inputs.lumpSumMonth > 0)) currentTitleKey += "*";
+        } else { // Standard or Standard with (ineffective or no) Extras
+            currentTitleKey = hasAnyExtraPayment ? 'currentStandardRefWithExtrasTitle' : 'currentStandardRefTitle';
             currentResultsToDisplay = standardResultsForCurrentInputs;
             currentIsEffectivelyAccelerated = false;
         }
-        currentResultsContainer.innerHTML = displaySummaryContent(S[currentTitleKey] || currentTitleKey.replace('*', ` (${S.checkComparisonText.toLowerCase()})`), currentResultsToDisplay, currentIsEffectivelyAccelerated, standardResultsForCurrentInputs.totalInterest);
+        currentResultsContainer.innerHTML = displaySummaryContent(S[currentTitleKey], currentResultsToDisplay, currentIsEffectivelyAccelerated, standardResultsForCurrentInputs.totalInterest);
     } else {
         currentResultsContainer.innerHTML = '<div id="resultSummaryCurrent"></div><div id="earlyRepaymentResultCurrent"></div>';
     }
@@ -523,10 +512,21 @@ function updateChart() {
     }
 
     if (scenarioAData) {
-        const isAEffectivelyAccelerated = scenarioAData.acceleratedResults && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01);
+        const inputsA = scenarioAData.inputs;
+        const isAExtraEffective = inputsA.extraMonthlyPayment > 0 || (inputsA.lumpSumPayment > 0 && inputsA.lumpSumMonth > 0 && inputsA.lumpSumMonth <= scenarioAData.standardResults.numberOfPayments);
+        const isAEffectivelyAccelerated = scenarioAData.acceleratedResults && isAExtraEffective && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01);
+        
+        let titleAKey;
+        if (isAEffectivelyAccelerated) {
+            titleAKey = 'scenarioAAcceleratedTitle';
+        } else if (isAExtraEffective) {
+            titleAKey = 'scenarioAStandardWithExtrasTitle';
+        } else {
+            titleAKey = 'scenarioAStandardTitle';
+        }
         const dataA = isAEffectivelyAccelerated ? scenarioAData.acceleratedBalanceHistory : scenarioAData.standardBalanceHistory;
-        const titleAKey = isAEffectivelyAccelerated ? 'scenarioAAcceleratedTitle' : 'scenarioAStandardTitle';
-        const labelA = S.chartScenarioALabel + (S[titleAKey] && S[titleAKey].includes('(') ? ` (${S[titleAKey].split('(')[1]}` : ''); 
+        const labelA = S.chartScenarioALabel + (S[titleAKey] && S[titleAKey].includes('(') ? ` (${S[titleAKey].split('(')[1]}` : '');
+
 
         if (dataA && dataA.length > 0 && (JSON.stringify(dataA) !== JSON.stringify(primaryStandardHistory) || !currentScenarioData )) {
             datasets.push({
@@ -538,26 +538,43 @@ function updateChart() {
     }
 
     if (currentScenarioData && currentScenarioData !== scenarioAData) { // Ensure current is distinct from A
-        const isCurrentEffectivelyAccelerated = currentScenarioData.acceleratedResults && (currentScenarioData.acceleratedResults.numberOfPayments < currentScenarioData.standardResults.numberOfPayments || currentScenarioData.acceleratedResults.totalInterest < currentScenarioData.standardResults.totalInterest - 0.01);
+        const inputsCurrent = currentScenarioData.inputs;
+        const isCurrentExtraEffective = inputsCurrent.extraMonthlyPayment > 0 || (inputsCurrent.lumpSumPayment > 0 && inputsCurrent.lumpSumMonth > 0 && inputsCurrent.lumpSumMonth <= currentScenarioData.standardResults.numberOfPayments);
+        const isCurrentEffectivelyAccelerated = currentScenarioData.acceleratedResults && isCurrentExtraEffective && (currentScenarioData.acceleratedResults.numberOfPayments < currentScenarioData.standardResults.numberOfPayments || currentScenarioData.acceleratedResults.totalInterest < currentScenarioData.standardResults.totalInterest - 0.01);
         const dataCurrent = isCurrentEffectivelyAccelerated ? currentScenarioData.acceleratedBalanceHistory : currentScenarioData.standardBalanceHistory; 
         
         let labelCurrentKey;
         if (scenarioAData) { // If A is pinned, this is Scenario B
-            labelCurrentKey = isCurrentEffectivelyAccelerated ? 'scenarioBAcceleratedTitle' : 'scenarioBStandardTitle';
+            if (isCurrentEffectivelyAccelerated) {
+                labelCurrentKey = 'scenarioBAcceleratedTitle';
+            } else if (isCurrentExtraEffective) {
+                labelCurrentKey = 'scenarioBStandardWithExtrasTitle';
+            } else {
+                labelCurrentKey = 'scenarioBStandardTitle';
+            }
         } else { // If A is not pinned, this is the main "Current" scenario
-            labelCurrentKey = isCurrentEffectivelyAccelerated ? 'currentAcceleratedTitle' : 'currentStandardRefTitle';
-        }
-        if (!isCurrentEffectivelyAccelerated && (currentScenarioData.inputs.extraMonthlyPayment > 0 || (currentScenarioData.inputs.lumpSumPayment > 0 && currentScenarioData.inputs.lumpSumMonth > 0))) {
-            labelCurrentKey += "*";
+            if (isCurrentEffectivelyAccelerated) {
+                labelCurrentKey = 'currentAcceleratedTitle';
+            } else if (isCurrentExtraEffective) {
+                labelCurrentKey = 'currentStandardRefWithExtrasTitle';
+            } else {
+                labelCurrentKey = 'currentStandardRefTitle';
+            }
         }
         
-        let labelCurrent = S[labelCurrentKey] || labelCurrentKey.replace('*', ` (${S.checkComparisonText.toLowerCase()})`);
-        if(S[labelCurrentKey] && S[labelCurrentKey].includes('(')){
-            let baseLabel = scenarioAData ? S.chartScenarioBLabel : (S.currentAcceleratedTitle.split(' ').slice(0,2).join(" ") || S.chartScenarioBLabel) ; // "Scenario B" or "Current Scenario"
-            labelCurrent = baseLabel + ` (${S[labelCurrentKey].split('(')[1]}`; // Append (Accelerated) or (Standard)
+        let labelCurrent = S[labelCurrentKey] || labelCurrentKey; // Key should directly exist
+        if(S[labelCurrentKey] && S[labelCurrentKey].includes('(') && S.currentAcceleratedTitle){ // Check S.currentAcceleratedTitle to prevent error if S is not fully loaded
+            let baseLabelPart = scenarioAData ? S.chartScenarioBLabel : (S.currentAcceleratedTitle.split(' ').slice(0,2).join(" ") || S.chartScenarioBLabel) ; 
+            labelCurrent = baseLabelPart + ` (${S[labelCurrentKey].split('(')[1]}`; 
         }
 
-        let dataAForCompare = scenarioAData ? (( (scenarioAData.acceleratedResults && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01)) ? scenarioAData.acceleratedBalanceHistory : scenarioAData.standardBalanceHistory)) : null;
+        let dataAForCompare = null;
+        if (scenarioAData) {
+            const inputsA = scenarioAData.inputs;
+            const isAExtraEffectiveComp = inputsA.extraMonthlyPayment > 0 || (inputsA.lumpSumPayment > 0 && inputsA.lumpSumMonth > 0 && inputsA.lumpSumMonth <= scenarioAData.standardResults.numberOfPayments);
+            const isAEffectivelyAcceleratedComp = scenarioAData.acceleratedResults && isAExtraEffectiveComp && (scenarioAData.acceleratedResults.numberOfPayments < scenarioAData.standardResults.numberOfPayments || scenarioAData.acceleratedResults.totalInterest < scenarioAData.standardResults.totalInterest - 0.01);
+            dataAForCompare = isAEffectivelyAcceleratedComp ? scenarioAData.acceleratedBalanceHistory : scenarioAData.standardBalanceHistory;
+        }
         
         if (dataCurrent && dataCurrent.length > 0 && 
             (JSON.stringify(dataCurrent) !== JSON.stringify(primaryStandardHistory)) && 
@@ -586,8 +603,8 @@ function updateChart() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    setLanguage(currentLanguage);
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadLanguageStrings();
     document.getElementById('currentScenarioResults').innerHTML = '<div id="resultSummaryCurrent"></div><div id="earlyRepaymentResultCurrent"></div>';
     document.getElementById('scenarioAResults').innerHTML = '';
     document.getElementById('scenarioAResults').style.display = 'none';
